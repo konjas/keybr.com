@@ -296,3 +296,28 @@ export function range(num) {
   }
   return ret;
 }
+
+////////////////////////////////////
+//
+//  Initializing javascript - in order.
+//
+// Add initializers to run on load, by file. 'order' is optional: If not given,
+// order 100+n and things run low-high by order. If no order is ever given,
+// they run first-last called. Or in other words, they order they show up in
+// <script> tags.
+//
+////////////////////////////////////
+const INITIALIZERS = {
+  load: [],
+  connected: [],
+};
+
+function addInitializer(type, func, order) {
+  if (order === undefined) order = 100 + INITIALIZERS[type].length;
+  INITIALIZERS[type].push({ order: order, func: func });
+}
+
+function runInitializers(type, ...args) {
+  const sorted = INITIALIZERS[type].sort((a, b) => a.order - b.order);
+  for (const call of sorted) call.func(...args);
+}
