@@ -312,12 +312,12 @@ const INITIALIZERS = {
   connected: [],
 };
 
-function addInitializer(type, func, order) {
+export function addInitializer(type, func, order) {
   if (order === undefined) order = 100 + INITIALIZERS[type].length;
   INITIALIZERS[type].push({ order: order, func: func });
 }
 
-function runInitializers(type, ...args) {
+export function runInitializers(type, ...args) {
   const sorted = INITIALIZERS[type].sort((a, b) => a.order - b.order);
   for (const call of sorted) call.func(...args);
 }
