@@ -108,6 +108,11 @@ export class Geometry implements EnumItem {
     "matrix",
     new Enum(),
   );
+  static readonly DATAHAND = new Geometry(
+    "datahand", //
+    "datahand/svalboard",
+    "datahand",
+  );
 
   static readonly ALL = new Enum<Geometry>(
     Geometry.ANSI_101,
@@ -121,6 +126,7 @@ export class Geometry implements EnumItem {
     Geometry.JAPANESE_106,
     Geometry.JAPANESE_106_FULL,
     Geometry.MATRIX,
+    Geometry.DATAHAND,
   );
 
   static first(items: Iterable<Geometry>): Geometry {
@@ -130,7 +136,7 @@ export class Geometry implements EnumItem {
   private constructor(
     readonly id: string,
     readonly name: string,
-    readonly form: "staggered" | "matrix",
+    readonly form: "staggered" | "matrix" | "datahand",
     readonly zones: Enum<ZoneMod>,
   ) {}
 

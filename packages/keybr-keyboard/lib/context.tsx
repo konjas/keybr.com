@@ -1,8 +1,17 @@
 import { useSettings } from "@keybr/settings";
-import { createContext, type ReactNode, useContext, useMemo } from "react";
-import { type Keyboard } from "./keyboard.ts";
+import { getKeymap } from "@keybr/sval";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
+import { Geometry } from "./geometry.ts";
+import { DATAHAND } from "./geometry/datahand.ts";
+import { Keyboard } from "./keyboard.ts";
+import { Layout } from "./layout.ts";
 import { loadKeyboard } from "./load.ts";
-import { KeyboardOptions } from "./settings.ts";
 
 export const KeyboardContext = createContext<Keyboard>(null!);
 
@@ -23,13 +32,19 @@ export function KeyboardProvider({
 }: {
   readonly children: ReactNode;
 }): ReactNode {
-  const { settings } = useSettings();
-  const keyboard = useMemo(
-    () => loadKeyboard(KeyboardOptions.from(settings)),
-    [settings],
-  );
+  const defaultKeyboard = loadKeyboard(Layout.EN_US, Geometry.DATAHAND);
+
+  const [keyboard, setKeyboard] = useState(defaultKeyboard);
+  const loadKeymap = async () => {
+    let keymap = await getKeymap();
+    setKeyboard(
+      new Keyboard(Layout.EN_US, Geometry.DATAHAND, keymap, DATAHAND),
+    );
+  };
+
   return (
     <KeyboardContext.Provider value={keyboard}>
+      <button onClick={loadKeymap}>Load keymap</button>
       {children}
     </KeyboardContext.Provider>
   );

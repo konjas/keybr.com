@@ -24,6 +24,7 @@
     "@keybr/rand": "*",
     "@keybr/result": "*",
     "@keybr/settings": "*",
+    "@keybr/sval": "*",
     "@keybr/textinput": "*",
     "@keybr/textinput-events": "*",
     "@keybr/textinput-sounds": "*",

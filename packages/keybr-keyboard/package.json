@@ -9,7 +9,8 @@
     "@keybr/intl": "*",
     "@keybr/lang": "*",
     "@keybr/settings": "*",
-    "@keybr/unicode": "*"
+    "@keybr/unicode": "*",
+    "@keybr/sval": "*"
   },
   "devDependencies": {},
   "scripts": {
