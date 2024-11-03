@@ -112,6 +112,7 @@ export class Geometry implements EnumItem {
     "datahand", //
     "datahand/svalboard",
     "datahand",
+    new Enum(),
   );
 
   static readonly ALL = new Enum<Geometry>(
