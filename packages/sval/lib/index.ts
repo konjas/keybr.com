@@ -28,7 +28,7 @@ export async function getKeymap() {
   LANGUAGE_MAP[KEY.localization] = {};
 
   for (let i = 0; i < l.length; i++) {
-    const str = KEY.define(l[i]).str;
+    const str = KEY.define(l[i]) ? KEY.define(l[i]).str : "";
     if (str.length === 1) {
       const chr = str.charCodeAt(0);
       if (chr >= 0x41 && chr <= 0x5a) {
