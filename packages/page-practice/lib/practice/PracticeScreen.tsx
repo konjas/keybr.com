@@ -22,9 +22,9 @@ export function PracticeScreen() {
 
 function ProgressUpdater({ lesson }: { readonly lesson: Lesson }) {
   const { results, appendResults } = useResults();
-  const [progress, { total, current }] = useProgress(lesson, results);
+  const [progress] = useProgress(lesson, results);
   if (progress == null) {
-    return <LoadingProgress total={total} current={current} />;
+    return <LoadingProgress />;
   } else {
     return (
       <Controller
@@ -42,24 +42,10 @@ function ProgressUpdater({ lesson }: { readonly lesson: Lesson }) {
 
 function useProgress(lesson: Lesson, results: readonly Result[]) {
   const { settings } = useSettings();
-  const [done, setDone] = useState(false);
-  const [loading, setLoading] = useState({ total: 0, current: 0 });
-  const progress = useMemo(
-    () => new Progress(settings, lesson),
-    [settings, lesson],
-  );
-  useEffect(() => {
-    // Populating the progress object can take a long time, so we do this
-    // asynchronously, interleaved with the browser event loop to avoid
-    // freezing of the UI.
-    const controller = new AbortController();
-    const { signal } = controller;
-    schedule(progress.seedAsync(lesson.filter(results), setLoading), { signal })
-      .then(() => setDone(true))
-      .catch(catchError);
-    return () => {
-      controller.abort();
-    };
-  }, [progress, lesson, results]);
-  return [done ? progress : null, loading] as const;
+  const progress = useMemo(() => {
+    let p = new Progress(settings, lesson);
+    p.seed(lesson.filter(results));
+    return p;
+  }, [settings, lesson]);
+  return [progress] as const;
 }
