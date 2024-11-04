@@ -37,6 +37,8 @@ export async function getKeymap() {
       } else if (chr) {
         ret["Key" + i] = [chr];
       }
+    } else {
+      ret["Key" + i] = [{ ligature: str }];
     }
   }
   return ret;
