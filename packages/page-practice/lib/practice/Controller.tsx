@@ -1,7 +1,7 @@
 import { type KeyId, useKeyboard } from "@keybr/keyboard";
 import { type Result } from "@keybr/result";
-import { type LineList } from "@keybr/textinput";
 import { QMK_KEYCODES } from "@keybr/sval";
+import { type LineList } from "@keybr/textinput";
 import { addKey, deleteKey, emulateLayout } from "@keybr/textinput-events";
 import { makeSoundPlayer } from "@keybr/textinput-sounds";
 import {
