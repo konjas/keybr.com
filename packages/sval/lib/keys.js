@@ -275,23 +275,19 @@ addInitializer("load", () => {
       let mod = KEYMAP[m[1] + "(kc)"];
       if (!mod) {
         mod = KEYMAP[m[1]];
-        if (mod in KEYALIASES) {
-          mod = KEYALIASES[mod];
-        }
-      } else if (mod in KEYALIASES) {
+      }
+      if (mod in KEYALIASES) {
         mod = KEYALIASES[mod];
       }
-      if (mod) {
-        if (m[2] === "kc") {
-          m[2] = "KC_NO";
-        }
-        const key = KEYMAP[m[2]];
-        return {
-          type: "key",
-          str: mod.str.replace(/\(kc\)/, "") + key.str,
-          title: key.title,
-        };
+      if (m[2] === "kc") {
+        m[2] = "KC_NO";
       }
+      const key = KEYMAP[m[2]];
+      return {
+        type: "key",
+        str: mod.str.replace(/\(kc\)/, "") + key.str,
+        title: key.title,
+      };
     }
 
     // Normal keys.
