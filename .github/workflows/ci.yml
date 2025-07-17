@@ -12,6 +12,11 @@ jobs:
         with:
           node-version: "22.x"
           cache: "npm"
+      - name: install packages
+        run: |
+          apt update
+          # required to test Sval packages:
+          apt install -y ava
       - name: CI
         run: |
           npm ci
